@@ -1,0 +1,19 @@
+{
+  "name": "school-app-backend",
+  "version": "1.0.0",
+  "description": "SChool app backend",
+  "main": "index.js",
+  "scripts": {
+    "test": "yarn test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/oddoye-david/school-app-backend.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/oddoye-david/school-app-backend/issues"
+  },
+  "homepage": "https://github.com/oddoye-david/school-app-backend#readme"
+}
