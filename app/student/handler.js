@@ -90,5 +90,6 @@ module.exports = {
   list,
   getById,
   listByName,
-  listByClass
+  listByClass,
+  create,
 }

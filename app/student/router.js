@@ -14,15 +14,16 @@ router.get('/', async (req, res) => {
 router.post('/', async (req, res) => {
   const { name, age, classId } = req.body
   const newStudent = { name, age, classId }
-  // Check that incoming student data is valid per the validation schema
-  const { error } = validate(newStudent)
 
-  if (error) {
-    return res.status(400).json({ status: 'ERROR' })
+  try {
+    // Check that incoming student data is valid per the validation schema
+    validate(newStudent)
+
+    const newlyCreatedStudent = await create(newStudent)
+    return res.json({ data: newlyCreatedStudent })
+  } catch (error) {
+    return res.status(400).json({ status: 'ERROR', error })
   }
-
-  const newlyCreatedStudent = await create(newStudent)
-  return res.json({ data: newlyCreatedStudent })
 })
 
 router.get('/:id', async (req, res) => {
