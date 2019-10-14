@@ -28,5 +28,5 @@ const validationSchema = Joi.object({
 
 module.exports = {
   model: StudentModel,
-  validate: validationSchema.validate
+  validate: (data) => validationSchema.validate(data)
 }
