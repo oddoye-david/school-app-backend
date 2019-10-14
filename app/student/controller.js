@@ -39,9 +39,19 @@ const listByClass = async classId => {
   return students
 }
 
+/**
+ * Create a student
+ *
+ */
+const create = async studentData => {
+  const newlyCreatedStudent = await StudentModel.create(studentData)
+  return newlyCreatedStudent
+}
+
 module.exports = {
   list,
   getById,
   listByName,
-  listByClass
+  listByClass,
+  create,
 }

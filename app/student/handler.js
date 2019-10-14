@@ -68,6 +68,24 @@ const listByClass = async classId => {
   }
 }
 
+/**
+ * Create a student
+ *
+ */
+const create = async (studentData) => {
+  try {
+    if (!studentData) {
+      throw new Error('Student data connot be null')
+    }
+
+    const newlyCreatedStudent = await StudentController.create(studentData)
+    return newlyCreatedStudent
+  } catch(error) {
+    console.error(error)
+    throw error
+  }
+}
+
 module.exports = {
   list,
   getById,
