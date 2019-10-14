@@ -1,13 +1,28 @@
 // entity based routes
 
 const express = require('express')
-const { list, getById, listByClass, listByName} = require('./handler')
+const { list, getById, listByClass, listByName, create } = require('./handler')
+const { validate } = require('./model')
 
 const router = express.Router()
 
 router.get('/', async (req, res) => {
   const students = await list()
   return res.json({ data: students })
+})
+
+router.post('/', async (req, res) => {
+  const { name, age, classId } = req.body
+  const newStudent = { name, age, classId }
+  // Check that incoming student data is valid per the validation schema
+  const { error } = validate(newStudent)
+
+  if (error) {
+    return res.status(400).json({ status: 'ERROR' })
+  }
+
+  const newlyCreatedStudent = await create(newStudent)
+  return res.json({ data: newlyCreatedStudent })
 })
 
 router.get('/:id', async (req, res) => {

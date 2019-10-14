@@ -9,3 +9,9 @@ server.use('/students', StudentRouter) // paths starting with "students" will be
 server.listen(PORT, () =>
   console.log(`School app backend listening on port ${PORT}!`)
 )
+
+// TODO:
+- Add create student
+- Add delete/deactivate student
+- add update student
+- Test all routes
