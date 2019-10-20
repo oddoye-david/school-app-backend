@@ -9,7 +9,10 @@ const guardianSchema = new Schema(
   {
     name: { type: String, required: true },
     age: { type: Number, required: true },
-    classId: { type: String, required: true }
+    wards: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Student'}],
+    address: { type: String, required: true },
+    phone: { type: String, required: true },
+    email: { type: String, required: true },
   },
   { timestamps: true, _id: true }
 )
@@ -23,7 +26,10 @@ const validationSchema = Joi.object({
   age: Joi.number()
     .min(1)
     .required(),
-  classId: Joi.string().required()
+  wards: Joi.array(),
+  address: Joi.string().required(),
+  phone: Joi.string().required(),
+  email: Joi.string().email()
 })
 
 module.exports = {
