@@ -8,6 +8,8 @@ const MONGO_URL = 'mongodb://localhost:27017/school-app'
 
 server.use('/students', StudentRouter) // paths starting with "students" will be handled by StudentRouter
 
+// TODO: Import guardian routes
+
 const init = async () => {
   try {
     await mongoose.connect(MONGO_URL, {useNewUrlParser: true, useUnifiedTopology: true })

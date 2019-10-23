@@ -1,5 +1,6 @@
 // connects to and retrieves data
 const { model: GuardianModel } = require('./model')
+// TODO: Redo methods to reflect Guardian object instead of student
 
 /**
  * List all guardians

@@ -1,5 +1,7 @@
 // uses controller(s) method(s) to compose data
 
+// TODO: Redo methods to reflect Guardian object instead of student
+
 const StudentController = require('./controller')
 
 /**
