@@ -1,14 +1,14 @@
 const mongoose = require('mongoose')
 
-const server = require('./app/server') // import server module from app directory
+const server = require('./app/server') // import server module
 const { router: StudentRouter } = require('./app/student')
+const { router: GuardianRouter } = require('./app/guardian');
 
 const PORT = 5555
 const MONGO_URL = 'mongodb://localhost:27017/school-app'
 
 server.use('/students', StudentRouter) // paths starting with "students" will be handled by StudentRouter
-
-// TODO: Import guardian routes
+server.use('/guardians', GuardianRouter)
 
 const init = async () => {
   try {

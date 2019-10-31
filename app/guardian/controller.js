@@ -1,58 +1,57 @@
 // connects to and retrieves data
-const { model: GuardianModel } = require('./model')
-// TODO: Redo methods to reflect Guardian object instead of student
+module.exports = ({ model: GuardianModel, validate }) => {
+  /**
+   * List all guardians
+   *
+   */
+  const list = async () => {
+    const guardians = await GuardianModel.find({}).populate('wards').lean()
+    return guardians
+  }
 
-/**
- * List all guardians
- *
- */
-const list = async () => {
-  const guardians = await GuardianModel.find({}).lean()
-  return guardians
-}
+  /**
+   * Get a specific guardian by their _id
+   *
+   */
+  const getById = async id => {
+    const guardian = await GuardianModel.findOne({
+      _id: id
+    }).lean()
+    return guardian
+  }
 
-/**
- * Get a specific guardian by their _id
- *
- */
-const getById = async id => {
-  const guardian = await GuardianModel.findOne({ _id: id }).lean()
-  return guardian
-}
+  /**
+   * List guardians by name
+   *
+   */
+  const listByName = async name => {
+    const guardians = await GuardianModel.find({
+      name: {
+        $regex: new RegExp(`^${name}$`, 'i'),
+        $options: 'i'
+      }
+    }).lean()
+    return guardians
+  }
 
-/**
- * List guardians by name
- *
- */
-const listByName = async name => {
-  const guardians = await GuardianModel.find({
-    name: { $regex: new RegExp(`^${name}$`, 'i'), $options: 'i' }
-  }).lean()
-  return guardians
-}
+  /**
+   * Create a guardian
+   *
+   */
+  const create = async guardianData => {
+    // calidates the guardian data coming in
+    validate(guardianData)
 
-/**
- * List guardians in a class
- *
- */
-const listByClass = async classId => {
-  const guardians = await GuardianModel.find({ class: classId }).lean()
-  return guardians
-}
+    const newlyCreatedGuardian = await GuardianModel.create(guardianData)
+    return newlyCreatedGuardian
+  }
 
-/**
- * Create a guardian
- *
- */
-const create = async guardianData => {
-  const newlyCreatedStudent = await GuardianModel.create(guardianData)
-  return newlyCreatedStudent
-}
+  return {
+    list,
+    getById,
+    listByName,
+    create
+  }
 
-module.exports = {
-  list,
-  getById,
-  listByName,
-  listByClass,
-  create,
+
 }

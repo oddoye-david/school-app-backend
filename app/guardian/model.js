@@ -9,13 +9,20 @@ const guardianSchema = new Schema(
   {
     name: { type: String, required: true },
     age: { type: Number, required: true },
-    wards: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Student'}],
+    wards: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Student' }],
     address: { type: String, required: true },
     phone: { type: String, required: true },
-    email: { type: String, required: true },
+    email: { type: String, required: true }
   },
   { timestamps: true, _id: true }
 )
+
+// Populate wards for guardians
+guardianSchema.post('find', async function(guardians) {
+  for (let guardian of guardians) {
+    await guardian.populate('wards').execPopulate();
+  }
+});
 
 // Create mongodb model
 const GuardianModel = mongoose.model('Guardian', guardianSchema)
@@ -26,7 +33,7 @@ const validationSchema = Joi.object({
   age: Joi.number()
     .min(1)
     .required(),
-  wards: Joi.array(),
+  wards: Joi.array().min(1),
   address: Joi.string().required(),
   phone: Joi.string().required(),
   email: Joi.string().email()
