@@ -1,97 +1,34 @@
-// uses controller(s) method(s) to compose data
+// entity based handler
+module.exports = (guardianController) => ({
+  list: async (req, res) => {
+    const guardians = await guardianController.list()
+    return res.json({ data: guardians })
+  },
 
-// TODO: Redo methods to reflect Guardian object instead of student
+  create: async (req, res) => {
+    const { name, age, classId } = req.body
+    const newGuardian = { name, age, classId }
 
-const StudentController = require('./controller')
-
-/**
- * List all guardians
- *
- */
-const list = async () => {
-  const guardians = await StudentController.list()
-  return guardians
-}
-
-/**
- * Get a specific guardian by their _id
- *
- */
-const getById = async id => {
-  try {
-    // check for falsy values
-    if (!id) {
-      throw new Error('id must have a value')
+    try {
+      const newlyCreatedGuardian = await guardianController.create(newGuardian)
+      return res.json({ data: newlyCreatedGuardian })
+    } catch (error) {
+      return res.status(400).json({ status: 'ERROR', error })
     }
+  },
 
-    const guardian = await StudentController.getById(id)
-    return guardian
-  } catch(error) {
-    console.error(error)
-    throw error
+  get: async (req, res) => {
+    const { id } = req.params
+
+    const guardian = await guardianController.getById(id)
+    return res.json({ data: guardian })
+  },
+
+  getByGuardianName: async (req, res) => {
+    const { name } = req.params
+
+    const guardians = await guardianController.listByName(name)
+    return res.json({ data: guardians })
   }
-}
+})
 
-/**
- * List guardians by name
- *
- */
-const listByName = async name => {
-  try {
-    // check for falsy values
-    if (!name) {
-      throw new Error('name must have a value')
-    }
-
-    const guardians = await StudentController.listByName(id)
-    return guardians
-  } catch(error) {
-    console.error(error)
-    throw error
-  }
-}
-
-/**
- * List guardians in a class
- *
- */
-const listByClass = async classId => {
-  try {
-    // check for falsy values
-    if (!classId) {
-      throw new Error('class must have a value')
-    }
-
-    const guardians = await StudentController.listByClass(classId)
-    return guardians
-  } catch(error) {
-    console.error(error)
-    throw error
-  }
-}
-
-/**
- * Create a guardian
- *
- */
-const create = async (guardianData) => {
-  try {
-    if (!guardianData) {
-      throw new Error('Guardian data connot be null')
-    }
-
-    const newlyCreatedStudent = await StudentController.create(guardianData)
-    return newlyCreatedStudent
-  } catch(error) {
-    console.error(error)
-    throw error
-  }
-}
-
-module.exports = {
-  list,
-  getById,
-  listByName,
-  listByClass,
-  create,
-}
