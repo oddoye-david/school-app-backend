@@ -5,7 +5,7 @@ module.exports = ({ model: GuardianModel, validate }) => {
    *
    */
   const list = async () => {
-    const guardians = await GuardianModel.find({}).populate('wards').lean()
+    const guardians = await GuardianModel.find({}).lean()
     return guardians
   }
 
