@@ -18,11 +18,11 @@ const guardianSchema = new Schema(
 )
 
 // Populate wards for guardians
-guardianSchema.post('find', async function(guardians) {
+/* guardianSchema.post('find', async function(guardians) {
   for (let guardian of guardians) {
     await guardian.populate('wards').execPopulate();
   }
-});
+}); */
 
 // Create mongodb model
 const GuardianModel = mongoose.model('Guardian', guardianSchema)
