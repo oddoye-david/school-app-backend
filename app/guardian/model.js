@@ -34,8 +34,8 @@ const validationSchema = Joi.object({
     .min(1)
     .required(),
   wards: Joi.array().min(1),
-  address: Joi.string().required(),
-  phone: Joi.string().required(),
+  address: Joi.string(),
+  phone: Joi.string(),
   email: Joi.string().email()
 })
 
